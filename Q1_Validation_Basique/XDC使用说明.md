@@ -171,7 +171,7 @@ LED15 ... LED3 LED2 LED1 LED0
 
 **解决**:
 1. 检查XDC文件中的端口名称
-2. 确保与顶层VHDL文件（digicode_top_q1.vhd或digicode_top.vhd）中的端口完全一致
+2. 确保与顶层VHDL文件（digicode.vhd）中的端口完全一致
 3. 注意大小写
 
 ### 问题2：实现后时序不满足
@@ -200,7 +200,7 @@ LED15 ... LED3 LED2 LED1 LED0
 **现象**: 一次按键触发多次
 
 **解决**:
-1. 检查division_horloge的分频比
+1. 检查div_horloge的分频比
 2. 确保时钟足够慢（约3Hz）
 3. 检查状态机的释放检测逻辑
 

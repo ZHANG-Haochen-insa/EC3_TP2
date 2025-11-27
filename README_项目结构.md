@@ -24,11 +24,11 @@ TP_E2/
 **包含文件**:
 ```
 Q1_Validation_Basique/
-├── moore_q1.vhd              # Moore状态机（9个状态）
-├── memoire.vhd               # 内存模块
-├── division_horloge.vhd      # 时钟分频器
-├── digicode_top_q1.vhd       # 顶层模块（Q1专用）
-├── moore_q1_tb.vhd           # Testbench
+├── moore_q.vhd               # Moore状态机（9个状态）
+├── memoire.vhd               # 只读内存模块
+├── div_horloge.vhd           # 时钟分频器
+├── digicode.vhd              # 顶层模块（Q1专用）
+├── tb_digicode.vhd           # Testbench
 ├── testbench解析.md          # Testbench中文详解
 ├── README_Q1.md              # Q1使用说明
 └── TP VHDL Digicode 2025.pdf # 实验指导书
@@ -79,7 +79,7 @@ Q2_Modification_Code/
 Q1 (基础版)              Q2 (完整版)
     │                        │
     │                        │
-moore_q1.vhd ────扩展───> machine_moore.vhd
+moore_q.vhd  ────扩展───> machine_moore.vhd
 (9个状态)                 (20个状态)
     │                        │
     ├─ 验证功能              ├─ 验证功能
@@ -134,10 +134,10 @@ moore_q1.vhd ────扩展───> machine_moore.vhd
    ```bash
    # 使用GHDL
    ghdl -a memoire.vhd
-   ghdl -a moore_q1.vhd
-   ghdl -a moore_q1_tb.vhd
-   ghdl -e moore_q1_tb
-   ghdl -r moore_q1_tb --wave=sim.ghw
+   ghdl -a moore_q.vhd
+   ghdl -a tb_digicode.vhd
+   ghdl -e tb_digicode
+   ghdl -r tb_digicode --wave=sim.ghw
    gtkwave sim.ghw
    ```
 

@@ -1,9 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
--- Entité principale du projet Digicode - Question 1 (Validation basique)
--- Cette version utilise la machine moore_q1 simplifiée à 9 états
-entity digicode_top_q1 is
+entity digicode is
     Port (
         -- Entrées globales
         CLK100MHZ   : in  STD_LOGIC; -- Horloge de la carte (ex: 100MHz sur Nexys A7)
@@ -23,12 +21,12 @@ entity digicode_top_q1 is
         LED1 : out STD_LOGIC; -- led_adresse(1)
         LED2 : out STD_LOGIC  -- led_porte (ouverture_porte)
     );
-end digicode_top_q1;
+end digicode;
 
-architecture Behavioral of digicode_top_q1 is
+architecture Behavioral of digicode is
 
     -- Déclaration des composants qui seront instanciés
-    component division_horloge is
+    component div_horloge is
         Port (
             clk_in  : in  STD_LOGIC;
             reset   : in  STD_LOGIC;
@@ -40,9 +38,7 @@ architecture Behavioral of digicode_top_q1 is
         Port (
             clk             : in  STD_LOGIC;
             reset           : in  STD_LOGIC;
-            wen             : in  STD_LOGIC;
             adresse         : in  STD_LOGIC_VECTOR (1 downto 0);
-            entree_memoire  : in  STD_LOGIC_VECTOR (3 downto 0);
             sortie_memoire  : out STD_LOGIC_VECTOR (3 downto 0)
         );
     end component;
@@ -67,9 +63,6 @@ architecture Behavioral of digicode_top_q1 is
     signal addr_from_fsm  : STD_LOGIC_VECTOR(1 downto 0);
     signal porte_ouverte  : STD_LOGIC;
 
-    -- Note: wen et data_to_mem ne sont pas définis car Q1 n'utilise pas la fonction d'écriture
-    -- Ces signaux seront fixés directement dans le port map de la mémoire
-
 begin
 
     -- Le reset de la carte : utilisation directe sans inversion.
@@ -80,7 +73,7 @@ begin
     data_boutons <= BTNL & BTNU & BTNR & BTND;
 
     -- Instanciation du diviseur d'horloge
-    U1_div_horloge : division_horloge
+    U1_div_horloge : div_horloge
         port map (
             clk_in  => CLK100MHZ,
             reset   => reset_global,
@@ -92,9 +85,7 @@ begin
         port map (
             clk             => clk_divisee,
             reset           => reset_global,
-            wen             => '0',          -- Toujours '0' : pas d'écriture en Q1
             adresse         => addr_from_fsm,
-            entree_memoire  => "0000",       -- Valeur non utilisée
             sortie_memoire  => data_from_mem
         );
 

@@ -34,9 +34,16 @@
    - 测试密码验证和修改功能
    - 自动验证功能正确性
 
+### 约束文件
+
+6. **digicode_q2.xdc** - FPGA引脚约束文件 ⭐新增
+   - Nexys A7开发板引脚定义
+   - 包含Q2所需的4个LED和2个开关
+   - 时钟约束和电气特性设置
+
 ### 文档文件
 
-6. **README_Q2.md** - 本文件
+7. **README_Q2.md** - 本文件
 
 ## 🎯 功能说明
 
@@ -98,12 +105,21 @@
 3. machine_moore.vhd
 4. digicode_top.vhd  (设为Top Module)
 
-# 添加约束文件（.xdc），确保包含SW1和LED3
+# 添加约束文件
+5. digicode_q2.xdc  (⭐重要：定义FPGA引脚，包含SW1和LED3)
+
 # 运行综合（Synthesis）
 # 运行实现（Implementation）
 # 生成比特流（Generate Bitstream）
 # 烧录到FPGA板
 ```
+
+**引脚分配说明**（根据PDF和digicode_q2.xdc）：
+- 时钟CLK: E3 (100MHz)
+- 复位BTNC: N17
+- 按钮：BTND(P18), BTNR(M17), BTNU(M18), BTNL(P17)
+- 开关：SW0(J15), SW1(L16) ⭐
+- LED：LED0(H17), LED1(K15), LED2(J13), LED3(N14) ⭐
 
 ### 2. GHDL仿真
 

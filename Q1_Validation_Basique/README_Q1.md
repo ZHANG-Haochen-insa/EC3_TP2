@@ -33,13 +33,20 @@
    - 包含6个测试场景
    - 自动验证功能正确性
 
+### 约束文件
+
+6. **digicode_q1.xdc** - FPGA引脚约束文件 ⭐新增
+   - Nexys A7开发板引脚定义
+   - 按钮、LED、开关的FPGA引脚映射
+   - 时钟约束和电气特性设置
+
 ### 文档文件
 
-6. **testbench解析.md** - Testbench详细解析
+7. **testbench解析.md** - Testbench详细解析
    - 中文说明
    - 包含时序图、使用方法、调试技巧
 
-7. **README_Q1.md** - 本文件
+8. **README_Q1.md** - 本文件
 
 ## 🎯 功能说明
 
@@ -90,12 +97,21 @@
 3. moore_q1.vhd
 4. digicode_top_q1.vhd  (设为Top Module)
 
-# 添加约束文件（.xdc）
+# 添加约束文件
+5. digicode_q1.xdc  (⭐重要：定义FPGA引脚)
+
 # 运行综合（Synthesis）
 # 运行实现（Implementation）
 # 生成比特流（Generate Bitstream）
 # 烧录到FPGA板
 ```
+
+**引脚分配说明**（根据PDF和digicode_q1.xdc）：
+- 时钟CLK: E3 (100MHz)
+- 复位BTNC: N17
+- 按钮：BTND(P18), BTNR(M17), BTNU(M18), BTNL(P17)
+- 开关SW0: J15
+- LED：LED0(H17), LED1(K15), LED2(J13)
 
 ### 2. GHDL仿真
 

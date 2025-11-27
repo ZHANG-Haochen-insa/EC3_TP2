@@ -40,7 +40,7 @@ architecture Behavioral of machine_etats is
         ST_WRITE_3, ST_WAIT_WRITE_REL_3, -- Ecriture du 3ème chiffre
         ST_WRITE_4, ST_WAIT_WRITE_REL_4  -- Ecriture du 4ème chiffre
     );
-    signal state, next_state : state_type;
+    signal state, next_state : state_type := ST_IDLE;
 
     -- Signal pour savoir si un bouton est pressé (différent de "0000")
     signal bouton_presse : std_logic;

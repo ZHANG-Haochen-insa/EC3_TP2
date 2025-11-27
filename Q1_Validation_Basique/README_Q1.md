@@ -8,15 +8,16 @@
 
 ### 核心设计文件
 
-1. **moore_q1.vhd** - 简化的Moore状态机（9个状态）
+1. **moore_q.vhd** - 简化的Moore状态机（9个状态）⭐已重命名
    - 功能：验证4位密码
    - 状态数：9个
    - 不包含密码修改功能
+   - 原名：moore_q1.vhd
 
 2. **memoire.vhd** - 内存模块
    - 存储4位密码
    - 默认密码：0001, 0010, 0100, 1000（BTND, BTNR, BTNU, BTNL）
-   - 支持读写（Q1中只使用读功能）
+   - 支持读写（Q1中wen固定为'0'，只读模式）
 
 3. **division_horloge.vhd** - 时钟分频器
    - 将100MHz系统时钟分频到约3Hz
@@ -24,14 +25,17 @@
 
 4. **digicode_top_q1.vhd** - 顶层模块（专为Q1设计）
    - 连接所有子模块
-   - 实例化moore_q1、memoire、division_horloge
+   - 实例化moore_q、memoire、division_horloge
+   - 内存写入端口固定为'0'（只读模式）
    - 映射到FPGA引脚
 
 ### 仿真测试文件
 
-5. **moore_q1_tb.vhd** - Testbench
+5. **tb_digicode.vhd** - Testbench ⭐已重命名
    - 包含6个测试场景
    - 自动验证功能正确性
+   - 不定义不必要的写相关信号（wen、entree_memoire）
+   - 原名：moore_q1_tb.vhd
 
 ### 约束文件
 
@@ -94,7 +98,7 @@
 # 添加以下源文件（按顺序）：
 1. memoire.vhd
 2. division_horloge.vhd
-3. moore_q1.vhd
+3. moore_q.vhd  ⭐(已重命名)
 4. digicode_top_q1.vhd  (设为Top Module)
 
 # 添加约束文件
@@ -118,17 +122,17 @@
 ```bash
 # 编译所有文件
 ghdl -a memoire.vhd
-ghdl -a moore_q1.vhd
-ghdl -a moore_q1_tb.vhd
+ghdl -a moore_q.vhd
+ghdl -a tb_digicode.vhd
 
 # 生成可执行文件
-ghdl -e moore_q1_tb
+ghdl -e tb_digicode
 
 # 运行仿真
-ghdl -r moore_q1_tb --wave=moore_q1_sim.ghw
+ghdl -r tb_digicode --wave=simulation.ghw
 
 # 查看波形
-gtkwave moore_q1_sim.ghw
+gtkwave simulation.ghw
 ```
 
 ## 📊 Moore状态机（9个状态）

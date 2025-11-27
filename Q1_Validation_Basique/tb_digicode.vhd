@@ -2,14 +2,14 @@ library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
 
--- Testbench pour moore_q1 (première partie du projet Digicode)
-entity moore_q1_tb is
-end moore_q1_tb;
+-- Testbench pour moore_q (Question 1 - Validation Basique)
+entity tb_digicode is
+end tb_digicode;
 
-architecture Behavioral of moore_q1_tb is
+architecture Behavioral of tb_digicode is
 
-    -- Déclaration du composant moore_q1
-    component moore_q1 is
+    -- Déclaration du composant moore_q
+    component moore_q is
         Port (
             clk             : in  STD_LOGIC;
             reset           : in  STD_LOGIC;
@@ -35,16 +35,15 @@ architecture Behavioral of moore_q1_tb is
 
     -- Signaux de test
     signal clk             : STD_LOGIC := '0';
-    signal reset           : STD_LOGIC := '0';
+    signal reset           : STD_LOGIC := '1';  -- Commencer avec reset actif
     signal contenu_bouton  : STD_LOGIC_VECTOR (3 downto 0) := "0000";
     signal contenu_mem     : STD_LOGIC_VECTOR (3 downto 0);
     signal porte           : STD_LOGIC := '0';
     signal adresse_machine : STD_LOGIC_VECTOR (1 downto 0);
     signal ouverture_porte : STD_LOGIC;
 
-    -- Signaux pour la mémoire (wen est toujours à '0' car on ne modifie pas le code)
-    signal wen             : STD_LOGIC := '0';
-    signal entree_memoire  : STD_LOGIC_VECTOR (3 downto 0) := "0000";
+    -- Note: wen et entree_memoire ne sont pas définis car Q1 n'utilise pas la fonction d'écriture
+    -- Ces signaux seront fixés directement dans le port map de la mémoire
 
     -- Constantes
     constant CLK_PERIOD : time := 10 ns;
@@ -58,19 +57,19 @@ architecture Behavioral of moore_q1_tb is
 
 begin
 
-    -- Instanciation de la mémoire
+    -- Instanciation de la mémoire (mode lecture seule pour Q1)
     UUT_MEM: memoire
         port map (
             clk             => clk,
             reset           => reset,
-            wen             => wen,
+            wen             => '0',          -- Toujours '0' : pas d'écriture en Q1
             adresse         => adresse_machine,
-            entree_memoire  => entree_memoire,
+            entree_memoire  => "0000",       -- Valeur non utilisée
             sortie_memoire  => contenu_mem
         );
 
-    -- Instanciation de la machine à états moore_q1
-    UUT: moore_q1
+    -- Instanciation de la machine à états moore_q
+    UUT: moore_q
         port map (
             clk             => clk,
             reset           => reset,

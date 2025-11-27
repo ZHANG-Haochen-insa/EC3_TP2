@@ -47,7 +47,7 @@ architecture Behavioral of digicode_top_q1 is
         );
     end component;
 
-    component moore_q1 is
+    component moore_q is
         Port (
             clk             : in  STD_LOGIC;
             reset           : in  STD_LOGIC;
@@ -67,9 +67,8 @@ architecture Behavioral of digicode_top_q1 is
     signal addr_from_fsm  : STD_LOGIC_VECTOR(1 downto 0);
     signal porte_ouverte  : STD_LOGIC;
 
-    -- Signaux pour la mémoire (wen toujours à '0' car pas de modification en Q1)
-    signal wen_signal     : STD_LOGIC := '0';
-    signal data_to_mem    : STD_LOGIC_VECTOR(3 downto 0) := "0000";
+    -- Note: wen et data_to_mem ne sont pas définis car Q1 n'utilise pas la fonction d'écriture
+    -- Ces signaux seront fixés directement dans le port map de la mémoire
 
 begin
 
@@ -88,19 +87,19 @@ begin
             clk_out => clk_divisee
         );
 
-    -- Instanciation de la mémoire
+    -- Instanciation de la mémoire (mode lecture seule pour Q1)
     U2_memoire : memoire
         port map (
             clk             => clk_divisee,
             reset           => reset_global,
-            wen             => wen_signal,
+            wen             => '0',          -- Toujours '0' : pas d'écriture en Q1
             adresse         => addr_from_fsm,
-            entree_memoire  => data_to_mem,
+            entree_memoire  => "0000",       -- Valeur non utilisée
             sortie_memoire  => data_from_mem
         );
 
-    -- Instanciation de la machine à états moore_q1 (version simplifiée)
-    U3_moore_q1 : moore_q1
+    -- Instanciation de la machine à états moore_q (version simplifiée)
+    U3_moore_q : moore_q
         port map (
             clk             => clk_divisee,
             reset           => reset_global,

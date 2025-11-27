@@ -18,9 +18,9 @@ end memoire;
 architecture Behavioral of memoire is
     -- Type pour un tableau de 4 mots de 4 bits
     type tcode is array (0 to 3) of std_logic_vector (3 downto 0);
-    -- Signal interne pour stocker le code
-    signal code : tcode;
- 
+    -- Signal interne pour stocker le code (initialisé avec le code par défaut)
+    signal code : tcode := ("0001", "0010", "0100", "1000");
+
 begin
 
     -- Processus pour la lecture et l'écriture de la mémoire

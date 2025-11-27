@@ -39,7 +39,7 @@ architecture Behavioral of machine_etats_tb is
 
     -- Signaux de test
     signal clk               : STD_LOGIC := '0';
-    signal reset             : STD_LOGIC := '0';
+    signal reset             : STD_LOGIC := '1';  -- Commencer avec reset actif
     signal contenu_bouton    : STD_LOGIC_VECTOR (3 downto 0) := "0000";
     signal contenu_mem       : STD_LOGIC_VECTOR (3 downto 0);
     signal modif_code        : STD_LOGIC := '0';

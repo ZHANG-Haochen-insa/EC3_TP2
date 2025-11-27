@@ -4,8 +4,8 @@ use IEEE.NUMERIC_STD.ALL;
 
 -- Machine à états finis (Moore) simplifiée pour la validation du code.
 -- Cette version n'inclut pas la logique de changement de code et utilise 9 états.
-entity moore_q1 is
-    Port ( 
+entity moore_q is
+    Port (
         clk             : in  STD_LOGIC;
         reset           : in  STD_LOGIC;
         -- Entrées
@@ -16,9 +16,9 @@ entity moore_q1 is
         adresse_machine : out STD_LOGIC_VECTOR (1 downto 0);
         ouverture_porte : out STD_LOGIC
     );
-end moore_q1;
+end moore_q;
 
-architecture Behavioral of moore_q1 is
+architecture Behavioral of moore_q is
 
     -- Définition des 9 états de la machine
     type state_type is (
@@ -32,8 +32,8 @@ architecture Behavioral of moore_q1 is
         ST_SUCCESS,     -- Code correct, porte ouverte
         ST_FAIL         -- Code incorrect
     );
-    signal state, next_state : state_type;
-    
+    signal state, next_state : state_type := ST_IDLE_1;
+
     -- Signal pour détecter si un bouton est pressé
     signal bouton_presse : std_logic;
 

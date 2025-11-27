@@ -14,27 +14,25 @@
    - 不包含密码修改功能
    - 原名：moore_q1.vhd
 
-2. **memoire.vhd** - 内存模块
+2. **memoire.vhd** - 只读内存模块
    - 存储4位密码
    - 默认密码：0001, 0010, 0100, 1000（BTND, BTNR, BTNU, BTNL）
-   - 支持读写（Q1中wen固定为'0'，只读模式）
+   - 仅包含读接口（Q1不涉及写功能）
 
-3. **division_horloge.vhd** - 时钟分频器
+3. **div_horloge.vhd** - 时钟分频器
    - 将100MHz系统时钟分频到约3Hz
    - 便于观察LED变化和按钮检测
 
-4. **digicode_top_q1.vhd** - 顶层模块（专为Q1设计）
+4. **digicode.vhd** - 顶层模块（专为Q1设计）
    - 连接所有子模块
-   - 实例化moore_q、memoire、division_horloge
-   - 内存写入端口固定为'0'（只读模式）
+   - 实例化moore_q、memoire、div_horloge
    - 映射到FPGA引脚
 
 ### 仿真测试文件
 
 5. **tb_digicode.vhd** - Testbench ⭐已重命名
-   - 包含6个测试场景
-   - 自动验证功能正确性
-   - 不定义不必要的写相关信号（wen、entree_memoire）
+   - 以最小化激励驱动正确与错误密码序列，便于在Vivado仿真中观察波形
+   - 不包含日志或断言，仅用于信号演化展示
    - 原名：moore_q1_tb.vhd
 
 ### 约束文件
@@ -97,9 +95,9 @@
 # 在Vivado中创建项目
 # 添加以下源文件（按顺序）：
 1. memoire.vhd
-2. division_horloge.vhd
-3. moore_q.vhd  ⭐(已重命名)
-4. digicode_top_q1.vhd  (设为Top Module)
+2. div_horloge.vhd
+3. moore_q.vhd
+4. digicode.vhd  (设为Top Module)
 
 # 添加约束文件
 5. digicode_q1.xdc  (⭐重要：定义FPGA引脚)
@@ -191,7 +189,7 @@ ST_FAIL        → 密码错误
 
 ## ⚠️ 注意事项
 
-1. **时钟分频**：如果LED闪烁太快或太慢，修改division_horloge.vhd中的分频比
+1. **时钟分频**：如果LED闪烁太快或太慢，修改div_horloge.vhd中的分频比
 2. **Reset极性**：当前代码使用高电平有效复位（无反转）
 3. **按钮去抖动**：确保每次按钮按下后完全释放再按下一个
 

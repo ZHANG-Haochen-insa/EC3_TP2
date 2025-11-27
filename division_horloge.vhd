@@ -21,12 +21,11 @@ begin
     begin
         if reset = '1' then
             compteur <= (others => '0');
-            clk_out <= '0';
         elsif rising_edge(clk_in) then
             compteur <= compteur + 1;
         end if;
     end process;
-    
+
     -- La sortie bascule à chaque fois que le bit de poids fort du compteur change.
     clk_out <= compteur(24);
 

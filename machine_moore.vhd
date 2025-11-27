@@ -100,7 +100,7 @@ begin
         wen <= '0';
         data_mem <= contenu_bouton;
 
-        case (state) is
+        case state is
             -------------------- SÉQUENCE DE VÉRIFICATION --------------------
             when ST_IDLE =>
                 if bouton_presse = '1' then
@@ -115,7 +115,6 @@ begin
                 end if;
             
             when ST_WAIT_REL_1 =>
-                adresse_machine <= "01";
                 if bouton_presse = '0' then
                     next_state <= ST_CHECK_2;
                 end if;
@@ -130,7 +129,6 @@ begin
                 end if;
 
             when ST_WAIT_REL_2 =>
-                adresse_machine <= "10";
                 if bouton_presse = '0' then
                     next_state <= ST_CHECK_3;
                 end if;
@@ -145,7 +143,6 @@ begin
                 end if;
 
             when ST_WAIT_REL_3 =>
-                adresse_machine <= "11";
                 if bouton_presse = '0' then
                     next_state <= ST_CHECK_4;
                 end if;
@@ -189,7 +186,6 @@ begin
                 end if;
                 
             when ST_CHANGE_MODE =>
-                 adresse_machine <= "00";
                  if modif_code = '0' then -- Si on quitte le mode changement
                      next_state <= ST_IDLE;
                  elsif bouton_presse = '1' then
@@ -201,7 +197,6 @@ begin
                 next_state <= ST_WAIT_WRITE_REL_1;
 
             when ST_WAIT_WRITE_REL_1 =>
-                adresse_machine <= "01";
                 if bouton_presse = '0' then
                     next_state <= ST_WRITE_2;
                 end if;
@@ -213,7 +208,6 @@ begin
                 end if;
             
             when ST_WAIT_WRITE_REL_2 =>
-                adresse_machine <= "10";
                 if bouton_presse = '0' then
                     next_state <= ST_WRITE_3;
                 end if;
@@ -225,7 +219,6 @@ begin
                 end if;
 
             when ST_WAIT_WRITE_REL_3 =>
-                adresse_machine <= "11";
                 if bouton_presse = '0' then
                     next_state <= ST_WRITE_4;
                 end if;

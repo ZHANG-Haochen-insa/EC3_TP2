@@ -80,7 +80,7 @@ begin
         -- Par défaut, rester dans le même état pour éviter les latches
         next_state <= state;
 
-        case (state) is
+        case state is
             -- Attente du 1er chiffre
             when ST_IDLE_1 =>
                 if bouton_presse = '1' then
